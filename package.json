@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "@types/fs-extra": "8.0.1",
-    "@types/mongodb": "3.3.14",
+    "@types/mongodb": "3.5.26",
     "@types/node": "13.1.8",
     "@types/unzipper": "0.10.0",
     "dotenv": "8.2.0",
