@@ -131,10 +131,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.14.8.tgz#2127bd81949a95c8b7d3240f3254352d72563aec"
   integrity sha512-z/5Yd59dCKI5kbxauAJgw6dLPzW+TNOItNE00PkpzNwUIEwdj/Lsqwq94H5DdYBX7C13aRA0CY32BK76+neEUA==
 
-"@types/unzipper@0.10.0":
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/@types/unzipper/-/unzipper-0.10.0.tgz#ae051eed1ec6735ff5adfac235d9bb17471b2901"
-  integrity sha512-GZL5vt0o9ZAST+7ge1Sirzc14EEJFbq6kib24nS0UglY6BHX8ERhA8cBq4XsYWcGK212FtMBZyJz6AwPvrhGLQ==
+"@types/unzipper@0.10.3":
+  version "0.10.3"
+  resolved "https://registry.yarnpkg.com/@types/unzipper/-/unzipper-0.10.3.tgz#9eea872fb1fa460da76f253878b6275af588f464"
+  integrity sha512-01mQdTLp3/KuBVDhP82FNBf+enzVOjJ9dGsCWa5z8fcYAFVgA9bqIQ2NmsgNFzN/DhD0PUQj4n5p7k6I9mq80g==
   dependencies:
     "@types/node" "*"
 
