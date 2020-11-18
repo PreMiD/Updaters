@@ -9,7 +9,7 @@ import {
 } from "fs";
 import { MongoClient } from "mongodb";
 import * as core from "@actions/core";
-import Octokit from "@octokit/rest";
+import { Octokit } from "@octokit/rest";
 import { basename } from "path";
 import { ensureDirSync } from "fs-extra";
 const octokit = new Octokit();
@@ -128,7 +128,7 @@ async function getLatestTranslations() {
 
 async function getSourceLanguage() {
 	const srcFolder = (
-		await octokit.repos.getContents({
+		await octokit.repos.getContent({
 			owner: "PreMiD",
 			repo: "Localization",
 			path: "src/"
@@ -140,7 +140,7 @@ async function getSourceLanguage() {
 	await Promise.all(
 		srcFolder.map(async p => {
 			const projFolder = (
-				await octokit.repos.getContents({
+				await octokit.repos.getContent({
 					owner: "PreMiD",
 					repo: "Localization",
 					path: p
