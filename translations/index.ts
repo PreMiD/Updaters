@@ -130,7 +130,7 @@ async function getSourceLanguage() {
 	const srcFolder = (
 		await octokit.repos.getContents({
 			owner: "PreMiD",
-			repo: "Strings",
+			repo: "Localization",
 			path: "src/"
 		})
 	).data
@@ -142,7 +142,7 @@ async function getSourceLanguage() {
 			const projFolder = (
 				await octokit.repos.getContents({
 					owner: "PreMiD",
-					repo: "Strings",
+					repo: "Localization",
 					path: p
 				})
 			).data
@@ -158,7 +158,7 @@ async function getSourceLanguage() {
 						JSON.stringify(
 							(
 								await axios.get(
-									`https://raw.githubusercontent.com/PreMiD/Strings/master/${f}`
+									`https://raw.githubusercontent.com/PreMiD/Localization/master/${f}`
 								)
 							).data
 						)
