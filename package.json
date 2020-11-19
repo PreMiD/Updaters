@@ -14,7 +14,7 @@
     "@types/node": "13.1.8",
     "@types/unzipper": "0.10.0",
     "dotenv": "8.2.0",
-    "source-map-support": "0.5.16",
+    "source-map-support": "0.5.19",
     "typescript": "3.7.5"
   },
   "dependencies": {
