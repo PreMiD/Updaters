@@ -1,9 +1,9 @@
 {
-  "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "inlineSourceMap": true,
-    "esModuleInterop": true
-  }
+	"compilerOptions": {
+		"target": "es6",
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"inlineSourceMap": true,
+		"esModuleInterop": true
+	}
 }

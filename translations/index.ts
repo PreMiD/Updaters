@@ -1,17 +1,15 @@
+import "source-map-support/register";
+
 import axios from "axios";
-import { Extract } from "unzipper";
-import {
-	createWriteStream,
-	createReadStream,
-	readdirSync,
-	readFileSync,
-	writeFileSync
-} from "fs";
-import { MongoClient } from "mongodb";
-import * as core from "@actions/core";
-import Octokit from "@octokit/rest";
-import { basename } from "path";
+import { createReadStream, createWriteStream, readdirSync, readFileSync, writeFileSync } from "fs";
 import { ensureDirSync } from "fs-extra";
+import { MongoClient } from "mongodb";
+import { basename } from "path";
+import { Extract } from "unzipper";
+
+import * as core from "@actions/core";
+import { Octokit } from "@octokit/rest";
+
 const octokit = new Octokit();
 
 try {
@@ -32,15 +30,15 @@ async function run() {
 	//* Map through lang folders
 	await getLatestTranslations();
 	core.info("Transforming result");
-	const folders = readdirSync("translations/master/");
+	const folders = readdirSync("translations/Localization/");
 	const translations = folders.map(f => {
 		//* Read projects inside lang Folder
 		//* return mapped through projects
-		const projects = readdirSync(`translations/master/${f}`);
+		const projects = readdirSync(`translations/Localization/${f}`);
 		return projects.map(p => {
 			//* Get files in project
 			//* Return mapped through files
-			const files = readdirSync(`translations/master/${f}/${p}`);
+			const files = readdirSync(`translations/Localization/${f}/${p}`);
 			return {
 				//* If lang === de_DE > de else keep it
 				//* Project
@@ -54,7 +52,10 @@ async function run() {
 						//* Read json of file
 						//* Return Object.assign > .map > 1 big object of all files
 						const json = JSON.parse(
-							readFileSync(`translations/master/${f}/${p}/${file}`, "utf-8")
+							readFileSync(
+								`translations/Localization/${f}/${p}/${file}`,
+								"utf-8"
+							)
 						);
 						return Object.assign(
 							{},
@@ -128,10 +129,10 @@ async function getLatestTranslations() {
 
 async function getSourceLanguage() {
 	const srcFolder = (
-		await octokit.repos.getContents({
+		await octokit.repos.getContent({
 			owner: "PreMiD",
-			repo: "Strings",
-			path: "src/"
+			repo: "Localization",
+			path: "src"
 		})
 	).data
 		// @ts-ignore
@@ -140,25 +141,25 @@ async function getSourceLanguage() {
 	await Promise.all(
 		srcFolder.map(async p => {
 			const projFolder = (
-				await octokit.repos.getContents({
+				await octokit.repos.getContent({
 					owner: "PreMiD",
-					repo: "Strings",
+					repo: "Localization",
 					path: p
 				})
 			).data
 				// @ts-ignore
 				.map(f => f.path);
 
-			ensureDirSync(`translations/master/en/${basename(p)}`);
+			ensureDirSync(`translations/Localization/en/${basename(p)}`);
 
 			await Promise.all(
 				projFolder.map(async f => {
 					writeFileSync(
-						`translations/master/en/${basename(p)}/${basename(f)}`,
+						`translations/Localization/en/${basename(p)}/${basename(f)}`,
 						JSON.stringify(
 							(
 								await axios.get(
-									`https://raw.githubusercontent.com/PreMiD/Strings/master/${f}`
+									`https://raw.githubusercontent.com/PreMiD/Localization/master/${f}`
 								)
 							).data
 						)
@@ -168,4 +169,3 @@ async function getSourceLanguage() {
 		})
 	);
 }
-//Adding a comment to make repo active!
