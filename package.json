@@ -9,7 +9,7 @@
 		"updateLangs": "cd translations && node index"
 	},
 	"devDependencies": {
-		"@types/fs-extra": "9.0.8",
+		"@types/fs-extra": "9.0.9",
 		"@types/mongodb": "3.6.10",
 		"@types/node": "14.14.35",
 		"@types/unzipper": "0.10.3",
