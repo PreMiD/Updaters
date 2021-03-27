@@ -20,8 +20,10 @@ core.info("Updating Translations");
 //* Create API Base
 //* Run updater
 const base = axios.create({
-	baseURL: "https://api.crowdin.com/api/project/premid/"
-});
+		baseURL: "https://api.crowdin.com/api/project/premid/"
+	}),
+	crowdinName = "[PreMiD.Localization] main";
+
 run();
 
 async function run() {
@@ -30,15 +32,15 @@ async function run() {
 	//* Map through lang folders
 	await getLatestTranslations();
 	core.info("Transforming result");
-	const folders = readdirSync("translations/Localization/");
+	const folders = readdirSync(`translations/${crowdinName}/`);
 	const translations = folders.map(f => {
 		//* Read projects inside lang Folder
 		//* return mapped through projects
-		const projects = readdirSync(`translations/Localization/${f}`);
+		const projects = readdirSync(`translations/${crowdinName}/${f}`);
 		return projects.map(p => {
 			//* Get files in project
 			//* Return mapped through files
-			const files = readdirSync(`translations/Localization/${f}/${p}`);
+			const files = readdirSync(`translations/${crowdinName}/${f}/${p}`);
 			return {
 				//* If lang === de_DE > de else keep it
 				//* Project
@@ -53,7 +55,7 @@ async function run() {
 						//* Return Object.assign > .map > 1 big object of all files
 						const json = JSON.parse(
 							readFileSync(
-								`translations/Localization/${f}/${p}/${file}`,
+								`translations/${crowdinName}/${f}/${p}/${file}`,
 								"utf-8"
 							)
 						);
@@ -105,10 +107,10 @@ async function getLatestTranslations() {
 			params: { key: process.env.CROWDIN_API_TOKEN, json: true }
 		})
 	).data;
-	if (!res.success || res.success.status === "skipped") {
+	/* 	if (!res.success || res.success.status === "skipped") {
 		core.info("Already up to date");
 		process.exit();
-	}
+	} */
 	core.info("Downloading translations...");
 	const tZIPresponse = await base("download/all.zip", {
 			responseType: "stream",
@@ -150,12 +152,12 @@ async function getSourceLanguage() {
 				// @ts-ignore
 				.map(f => f.path);
 
-			ensureDirSync(`translations/Localization/en/${basename(p)}`);
+			ensureDirSync(`translations/${crowdinName}/en/${basename(p)}`);
 
 			await Promise.all(
 				projFolder.map(async f => {
 					writeFileSync(
-						`translations/Localization/en/${basename(p)}/${basename(f)}`,
+						`translations/${crowdinName}/en/${basename(p)}/${basename(f)}`,
 						JSON.stringify(
 							(
 								await axios.get(
